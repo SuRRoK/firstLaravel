@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 
     ];
 
     /**
@@ -47,7 +48,8 @@ class User extends Authenticatable
     {
         $user = new static;
         $user->fill($fields);
-        $user->password = bcrypt($fields['password']);
+        $user->cryptPassword($fields['password']);
+        //dd($fields['password']);
         $user->save();
 
         return $user;
@@ -56,33 +58,42 @@ class User extends Authenticatable
     public function edit($fields)
     {
         $this->fill($fields);
-        $this->password = bcrypt($fields['password']);
+        $this->cryptPassword($fields['password']);
         $this->save();
     }
 
     public function remove()
     {
+        $this->removeAvatar();
         $this->delete();
     }
 
-    public function uploadAvatar($image)
+    public function removeAvatar()
+    {
+        if ($this->avatar != null) {
+            Storage::delete('uploads/' . $this->avatar);
+        }
+    }
+
+    public function uploadAvatar($avatar)
     {
 
-        if ($image == null) { return; }
-        Storage::delete('uploads/' . $this->image);
-        $filename = str_random(12) . '.' . $image->extension;
-        $image->saveAs('uploads',$filename);
-        $this->image = $filename;
+        if ($avatar == null) { return; }
+        $this->removeAvatar();
+
+        $filename = str_random(12) . '.' . $avatar->extension();
+        $avatar->storeAs('uploads',$filename);
+        $this->avatar = $filename;
         $this->save();
     }
 
     public function getAvatar()
     {
-        if ($this->image == null)
+        if ($this->avatar == null)
         {
             return '/img/no-user-image.png';
         }
-        return '/uploads/' . $this->image;
+        return '/uploads/' . $this->avatar;
     }
 
     public function setAdmin()
@@ -127,6 +138,14 @@ class User extends Authenticatable
         }
 
         return $this->ban();
+    }
+
+    public function cryptPassword($password)
+    {
+        if ($password != null) {
+            $this->password = bcrypt($password);
+            $this->save();
+        }
     }
 
 }

@@ -25,7 +25,9 @@ class CategoriesController extends Controller
         'title' => 'required',
         'description' => 'required',
         ]);
-        Category::create($request->all());
+        $category = Category::add($request->all());
+        $category->uploadImage($request->file('image'));
+
         return redirect()->route('categories.index');
     }
 
@@ -43,14 +45,17 @@ class CategoriesController extends Controller
             'description' => 'required',
         ]);
          $category = Category::find($id);
-         $category->update($request->all());
+         $category->edit($request->all());
+         //dd($request->file('image'));
+         $category->uploadImage($request->file('image'));
 
          return redirect()->route('categories.index');
     }
 
     public function destroy($id)
     {
-        Category::find($id)->delete();
+
+        Category::find($id)->remove();
         return redirect()->route('categories.index');
     }
 }

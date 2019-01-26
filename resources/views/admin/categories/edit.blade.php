@@ -28,7 +28,7 @@
                     @include('admin.errors')
                          
                         <div class="card-body">
-                            {!! Form::open(['route' => ['categories.update', $category->id], 'method' => 'put']) !!}
+                            {!! Form::open(['route' => ['categories.update', $category->id], 'method' => 'put', 'files' => true]) !!}
                             <div class="form-group">
                                 <label for="title">Name category</label>
                                 <input type="text" id="title" name="title" class="form-control" value="{{$category->title}}" placeholder="Enter category title">
@@ -42,11 +42,15 @@
                                 <label for="image">Choose image for category</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
-                                        <label class="custom-file-label" for="image">Choose image</label>
+                                        <input type="file" {{--class="custom-file-input"--}} id="image" name="image">
+                                        {{--<label class="custom-file-label" for="image">Choose image</label>--}}
                                     </div>
 
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <p>Avatar</p>
+                                <img src="{{$category->getImage()}}" alt="" width="200" class="img-thumbnail">
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-warning">Modify category</button>

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Facades\Storage;
 
 
 class Category extends Model
@@ -43,7 +44,7 @@ class Category extends Model
 
     public function remove()
     {
-
+        $this->removeImage();
         $this->delete();
     }
 
@@ -51,9 +52,9 @@ class Category extends Model
     {
 
         if ($image == null) { return; }
-        Storage::delete('uploads/' . $this->image);
-        $filename = str_random(12) . '.' . $image->extension;
-        $image->saveAs('uploads',$filename);
+        $this->removeImage();
+        $filename = str_random(12) . '.' . $image->extension();
+        $image->storeAs('uploads',$filename);
         $this->image = $filename;
         $this->save();
     }
@@ -65,6 +66,13 @@ class Category extends Model
             return '/img/no-category-image.png';
         }
         return '/uploads/' . $this->image;
+    }
+
+    public function removeImage()
+    {
+        if ($this->image != null) {
+            Storage::delete('uploads/' . $this->image);
+        }
     }
 
 }

@@ -48,7 +48,7 @@
                                 @foreach($categories as $category)
                                     <tr>
                                         <td>{{$category->id}}</td>
-                                        <td>{{$category->image}}</td>
+                                        <td><img src="{{$category->getImage()}}" class="img-thumbnail" width="100" alt=""></td>
                                         <td>{{$category->title}}</td>
                                         <td>{{$category->description}}</td>
                                         <td><a href="{{route('categories.edit', $category->id)}}" class="icon fa fa-edit edit"></a>

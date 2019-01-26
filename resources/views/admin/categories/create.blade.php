@@ -31,7 +31,7 @@
                                             </div>--}}
                     <!-- /.card-header -->
                         <div class="card-body">
-                            {!! Form::open(['route' => 'categories.store']) !!}
+                            {!! Form::open(['route' => 'categories.store', 'files' => true]) !!}
                             <div class="form-group">
                                 <label for="title">Name category</label>
                                 <input type="text" id="title" name="title" class="form-control" placeholder="Enter category title">
@@ -45,8 +45,8 @@
                                 <label for="image">Choose image for category</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="image" name="image">
-                                        <label class="custom-file-label" for="image">Choose image</label>
+                                        <input type="file" {{--class="custom-file-input"--}} id="image" name="image">
+                                        <{{--label class="custom-file-label" for="image">Choose image</label>--}}
                                     </div>
 
                                 </div>

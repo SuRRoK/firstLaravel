@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Categories</h1>
+                        <h1>Tags</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                            <li class="breadcrumb-item active">Categories</li>
+                            <li class="breadcrumb-item active">Tags</li>
                         </ol>
                     </div>
                 </div>
@@ -25,10 +25,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Categories</h3>
+                            <h3 class="card-title">Tags</h3>
                         </div>
                         <div class="card-header">
-                            <a href="{{route('categories.create')}}" class="btn btn-success">Add category</a>
+                            <a href="{{route('tags.create')}}" class="btn btn-success">Add tag</a>
                         </div>
 
                         <!-- /.card-header -->
@@ -37,22 +37,18 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Image</th>
                                     <th>Title</th>
-                                    <th>Description</th>
                                     <th>Edit</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                @foreach($categories as $category)
+                                @foreach($tags as $tag)
                                     <tr>
-                                        <td>{{$category->id}}</td>
-                                        <td>{{$category->image}}</td>
-                                        <td>{{$category->title}}</td>
-                                        <td>{{$category->description}}</td>
-                                        <td><a href="{{route('categories.edit', $category->id)}}" class="icon fa fa-edit edit"></a>
-                                            {!! Form::open(['route' => ['categories.destroy', $category->id], 'method' => 'delete']) !!}
+                                        <td>{{$tag->id}}</td>
+                                        <td>{{$tag->title}}</td>
+                                        <td><a href="{{route('tags.edit', $tag->id)}}" class="icon fa fa-edit edit"></a>
+                                        {!! Form::open(['route' => ['tags.destroy', $tag->id], 'method' => 'delete']) !!}
                                             <button onclick="return confirm('Are you sure?')" class="delete" type="submit"><i class="icon fa fa-trash edit"></i></button>
                                             {!! Form::close() !!}   </td>
                                     </tr>
@@ -62,9 +58,7 @@
                                 <tfoot>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Image</th>
                                     <th>Title</th>
-                                    <th>Description</th>
                                     <th>Edit</th>
                                 </tr>
                                 </tfoot>

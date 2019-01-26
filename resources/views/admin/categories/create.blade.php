@@ -53,7 +53,7 @@
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-info">Save category</button>
-                                <button type="submit" class="btn btn-default float-right">Cancel</button>
+                                <a href="{{route('categories.index')}}" class="btn btn-default float-right">Cancel</a>
                             </div>
                             {!! Form::close() !!}
 
